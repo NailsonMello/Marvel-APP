@@ -1,11 +1,43 @@
 {
+  "name": "marvel",
+  "displayName": "App - Marvel",
   "expo": {
     "name": "marvel",
     "slug": "marvel",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
+    "android": {
+      "permissions": [
+        "READ_CALENDAR",
+        "WRITE_CALENDAR",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "platforms": [
+      "android",
+      "ios"
     ]
-  },
-  "name": "marvel"
+  }
 }

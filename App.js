@@ -1,21 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { Provider } from 'react-redux'
+import { StatusBar, View } from 'react-native'
+import * as Font from 'expo-font'
+import Routes from './src/routes'
+import store from './src/config/store'
 
-export default function App() {
+const App = () => {
+  const [isLoadingComplete, setLoadingComplete] = useState(false)
+
+  useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        await Font.loadAsync({
+          'Roboto_400Regular': require('./src/assets/fonts/Roboto-Regular.ttf'),
+          'Roboto_500Medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
+          'Roboto-LightItalic': require('./src/assets/fonts/Roboto-LightItalic.ttf'),
+          'Roboto_BoldItalic': require('./src/assets/fonts/Roboto-BoldItalic.ttf'),
+        })
+      } catch (e) {
+        console.warn(e)
+      } finally {
+        setLoadingComplete(true)
+      }
+    }
+
+    loadResourcesAndDataAsync()
+  }, [])
+
+  if (!isLoadingComplete) {
+    return null
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View
+      style={{
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 40 : 0
+      }}
+    >
+      <StatusBar
+        animated={true}
+        translucent={false}
+        backgroundColor='rgba(255,0,0,0.7)'
+        barStyle="light-content"
+      />
+      <Provider store={store}>
+        <Routes />
+      </Provider>
     </View>
-  );
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
